@@ -13,6 +13,10 @@ npx hardhat node &
 npx hardhat run scripts/poker-evaluator.ts --network localhost
 ```
 
+# Gas
+1. flush : 77K
+2. no-flush : 135K
+
 # TODO
 1. split contract to deploy on real network.
 2. same rank compare

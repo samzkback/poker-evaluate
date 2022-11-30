@@ -118,6 +118,7 @@ async function main(
 
     //  Spades "2/3/4/5/6/7/8"
     expect(await eva.handRankV2([0, 4, 8, 12, 16, 20, 24])).eq(RANK.STRAIGHT_FLUSH)
+    console.log("flush_gas : ", await eva.estimateGas.handRankV2([0, 4, 8, 12, 16, 20, 24]))
 
     // Spades "2/3/4/5/6" Hearts"2" Diamonds"2"
     expect(await eva.handRankV2([0, 4, 8, 12, 16, 1, 2])).eq(RANK.STRAIGHT_FLUSH)
@@ -147,6 +148,8 @@ async function main(
 
     // "2", "3", "4", "5", "J",  "Q", "K"
     expect(await eva.handRankV2([0, 4, 8, 14, 39, 41, 44])).eq(RANK.HIGH_CARD)
+    console.log("unflush gas : ", await eva.estimateGas.handRankV2([0, 4, 8, 14, 39, 41, 44]))
+
 }
 
 main()
