@@ -56,10 +56,14 @@ module.exports = {
   },
   networks: {
     localhost: {
-      accounts: customAccounts
+      accounts: customAccounts,
+      blockGasLimit : 300_000_000,
+      gas : 300_000_000
     },
     hardhat: {
       accounts: hardhatAccounts,
+      blockGasLimit : 300_000_000,
+      gas : 300_000_000
     },
 
     l1: {
