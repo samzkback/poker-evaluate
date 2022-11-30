@@ -25,6 +25,7 @@ import {NoFlush15} from "./noFlush/NoFlush15.sol";
 import {NoFlush16} from "./noFlush/NoFlush16.sol";
 import {NoFlush17} from "./noFlush/NoFlush17.sol";
 
+import "hardhat/console.sol";
 
 contract Evaluator7 {
 
@@ -86,6 +87,11 @@ contract Evaluator7 {
         }
     }
 
+
+    function handRankV2(uint[7] calldata cards) public view returns (uint8) {
+        return handRank(cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], cards[6]);
+    }
+
     function handRank(uint a, uint b, uint c, uint d, uint e, uint f, uint g) public view returns (uint8) {
         uint val = evaluate(a,b,c,d,e,f,g);
 
@@ -122,6 +128,7 @@ contract Evaluator7 {
         quinary[(g >> 2)]++;
 
         uint suits = DpTables(DP_TABLES).suits(suit_hash);
+        console.log("suits : ", suits);
 
         if (suits > 0) {
             suit_binary[a & 0x3] |= binaries_by_id[a];
@@ -145,6 +152,7 @@ contract Evaluator7 {
         }     
 
         hsh = hash_quinary(quinary, 13, 7);
+        console.log("hsh : ", hsh);
 
         if (hsh < 3000) {
             return NoFlush1(NOFLUSH_ADDRESSES[0]).noflush(hsh);

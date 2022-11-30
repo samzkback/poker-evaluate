@@ -17,10 +17,11 @@ async function deploy_flushs(
   
   if (using_previous_deploy) {
     return [
-      '0x0c4471deDaE2dB1e53a4927ca598A9236A9cD773',
-      '0xd9402769415035d59dE98733Dd166c4e903B4f8C',
-      '0x48F8e25562EB57c9Fb1b12145d34f09b1b8bd1D6'
+        '0xA1980305533385CA58273e6Bf947956324e39041',
+        '0x99993F3DA09cf76d4CbCF43ea7D2977a9792B7BF',
+        '0x724bdd89A71e233E4000646eaf83dE60Ca1FAA8d'
     ]
+
   }
   let flushs = []
   flushs.push((await (new Flush1__factory(owner)).deploy()).address)
@@ -99,6 +100,23 @@ async function main(
       {gasLimit : 300000000}
     )
     console.log("eva.address : " , eva.address)
+
+    enum RANK {
+      STRAIGHT_FLUSH  = 0,
+      FOUR_OF_A_KIND  = 1,
+      FULL_HOUSE      = 2,
+      FLUSH           = 3,
+      STRAIGHT        = 4,
+      THREE_OF_A_KIND = 5,
+      TWO_PAIR        = 6,
+      ONE_PAIR        = 7,
+      HIGH_CARD       = 8
+    }
+
+    const cards = [1, 2, 3, 4, 5, 6, 7]
+    //const rank = await eva.handRankV2(cards)
+    const rank = await eva.handRank(1, 2, 3, 4, 5, 6, 7)
+    console.log("rank : ", rank)
 
 }
 
