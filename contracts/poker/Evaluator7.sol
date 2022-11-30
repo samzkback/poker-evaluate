@@ -31,7 +31,7 @@ contract Evaluator7 {
 
     address public immutable DP_TABLES;
     address[3] public  FLUSH_ADDRESSES;
-    address[16] public NOFLUSH_ADDRESSES;
+    address[17] public NOFLUSH_ADDRESSES;
 
     uint8 STRAIGHT_FLUSH  = 0;
     uint8 FOUR_OF_A_KIND  = 1;
@@ -75,7 +75,7 @@ contract Evaluator7 {
         0x1,  0x8,  0x40, 0x200
     ];
 
-    constructor(address _dpTables, address[3] memory _flushes, address[16] memory _noflushes)  {
+    constructor(address _dpTables, address[3] memory _flushes, address[17] memory _noflushes)  {
         DP_TABLES = _dpTables;
 
         for (uint i=0; i<_flushes.length; i++) {
@@ -151,55 +151,62 @@ contract Evaluator7 {
 
         }     
 
-        hsh = hash_quinary(quinary, 13, 7);
+        console.log("quinary : ");
+        for (uint index = 0; index < 13; index++) {
+            console.log(quinary[index]);
+        }
+    
+        hsh = hash_quinary(quinary, 13, 7); // buggy!!
         console.log("hsh : ", hsh);
 
         if (hsh < 3000) {
             return NoFlush1(NOFLUSH_ADDRESSES[0]).noflush(hsh);
         } else if (hsh < 6000 ) {
-            return NoFlush2(NOFLUSH_ADDRESSES[1]).noflush(hsh);
+            return NoFlush2(NOFLUSH_ADDRESSES[1]).noflush(hsh - 3000);
 
         } else if (hsh < 9000) {
-            return NoFlush3(NOFLUSH_ADDRESSES[2]).noflush(hsh);
+            return NoFlush3(NOFLUSH_ADDRESSES[2]).noflush(hsh - 6000);
 
         } else if (hsh < 12000) {
-            return NoFlush4(NOFLUSH_ADDRESSES[3]).noflush(hsh);
+            return NoFlush4(NOFLUSH_ADDRESSES[3]).noflush(hsh - 9000);
 
         } else if (hsh < 15000) {
-            return NoFlush5(NOFLUSH_ADDRESSES[4]).noflush(hsh);
+            return NoFlush5(NOFLUSH_ADDRESSES[4]).noflush(hsh - 12000);
 
         } else if (hsh < 18000) {
-            return NoFlush6(NOFLUSH_ADDRESSES[5]).noflush(hsh);
+            return NoFlush6(NOFLUSH_ADDRESSES[5]).noflush(hsh - 15000);
 
         } else if (hsh < 21000) {
-            return NoFlush7(NOFLUSH_ADDRESSES[6]).noflush(hsh);
+            return NoFlush7(NOFLUSH_ADDRESSES[6]).noflush(hsh - 18000);
 
         } else if (hsh < 24000) {
-            return NoFlush8(NOFLUSH_ADDRESSES[7]).noflush(hsh);
+            return NoFlush8(NOFLUSH_ADDRESSES[7]).noflush(hsh - 21000);
 
         } else if (hsh < 27000) {
-            return NoFlush9(NOFLUSH_ADDRESSES[8]).noflush(hsh);
+            return NoFlush9(NOFLUSH_ADDRESSES[8]).noflush(hsh - 24000);
 
         } else if (hsh < 30000) {
-            return NoFlush10(NOFLUSH_ADDRESSES[9]).noflush(hsh);
+            return NoFlush10(NOFLUSH_ADDRESSES[9]).noflush(hsh - 27000);
 
         } else if (hsh < 33000) {
-            return NoFlush11(NOFLUSH_ADDRESSES[10]).noflush(hsh);
+            return NoFlush11(NOFLUSH_ADDRESSES[10]).noflush(hsh - 30000);
 
         } else if (hsh < 36000) {
-            return NoFlush12(NOFLUSH_ADDRESSES[11]).noflush(hsh);
+            return NoFlush12(NOFLUSH_ADDRESSES[11]).noflush(hsh - 33000);
 
         } else if (hsh < 39000) {
-            return NoFlush13(NOFLUSH_ADDRESSES[12]).noflush(hsh);
+            return NoFlush13(NOFLUSH_ADDRESSES[12]).noflush(hsh - 36000);
 
         } else if (hsh < 42000) {
-            return NoFlush14(NOFLUSH_ADDRESSES[13]).noflush(hsh);
+            return NoFlush14(NOFLUSH_ADDRESSES[13]).noflush(hsh - 39000);
 
         } else if (hsh < 45000) {
-            return NoFlush15(NOFLUSH_ADDRESSES[14]).noflush(hsh);
+            return NoFlush15(NOFLUSH_ADDRESSES[14]).noflush(hsh - 42000);
 
+        } else if (hsh < 48000) {
+            return NoFlush16(NOFLUSH_ADDRESSES[15]).noflush(hsh - 45000);
         } else {
-            return NoFlush16(NOFLUSH_ADDRESSES[15]).noflush(hsh);
+            return NoFlush17(NOFLUSH_ADDRESSES[16]).noflush(hsh - 48000);
         }
 
     }

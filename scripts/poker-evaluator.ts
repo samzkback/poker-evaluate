@@ -1,6 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { deploy } from "@openzeppelin/hardhat-upgrades/dist/utils";
 import { expect } from "chai";
+import { randomBytes } from "crypto";
 import { ethers } from "hardhat";
 import { exit } from "process";
 import { DpTables__factory, Evaluator7__factory, Flush1__factory, Flush2__factory, Flush3__factory, NoFlush10__factory, NoFlush11__factory, NoFlush12__factory, NoFlush13__factory, NoFlush14__factory, NoFlush15__factory, NoFlush16__factory, NoFlush17__factory, NoFlush1__factory, NoFlush2__factory, NoFlush3__factory, NoFlush4__factory, NoFlush5__factory, NoFlush6__factory, NoFlush7__factory, NoFlush8__factory, NoFlush9__factory } from "./types";
@@ -55,7 +56,7 @@ async function deploy_no_flushs(
         '0x8F8a52Ee35A15F29c789b7a635aA78bC10628B87',
         '0x968A20D6241BCCaBe710136950876aD1Bf31512f',
         '0x1C254319da64bD459A361B0f4568306DabcCF6E2',
-        //'0xF3E8A05937d2f02192604b0B59Ed311808662Ff9'
+        '0xF3E8A05937d2f02192604b0B59Ed311808662Ff9'
       ]
     }
 
@@ -115,9 +116,6 @@ async function main(
       HIGH_CARD       = 8
     }
 
-    let cards
-    let rank
-    
     //  Spades "2/3/4/5/6/7/8"
     expect(await eva.handRankV2([0, 4, 8, 12, 16, 20, 24])).eq(RANK.STRAIGHT_FLUSH)
 
@@ -127,11 +125,8 @@ async function main(
     // Spades "2/3/4/5/7" Hearts"2" Diamonds"2"
     expect(await eva.handRankV2([0, 4, 8, 12, 20, 1, 2])).eq(RANK.FLUSH)
 
-    // "2/2/2/2", "3/3/3"
-    rank = await eva.handRankV2([0, 1, 2, 3, 4, 5, 7])
-    console.log("rank : ", rank)
-
-    exit(0)
+    // "2/2/2/2", "3/3", "4"
+    expect(await eva.handRankV2([0, 1, 2, 3, 4, 5, 8])).eq(RANK.FOUR_OF_A_KIND)
 }
 
 main()
