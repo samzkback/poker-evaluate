@@ -124,9 +124,20 @@ async function main(
 
     // Spades "2/3/4/5/7" Hearts"2" Diamonds"2"
     expect(await eva.handRankV2([0, 4, 8, 12, 20, 1, 2])).eq(RANK.FLUSH)
+    // "Spades 2/2/2", "Spades 3", "Spades4", "SpadesQ", "SpadesK"
+    expect(await eva.handRankV2([0, 1, 2, 4, 8, 40, 44])).eq(RANK.FLUSH)
 
     // "2/2/2/2", "3/3", "4"
     expect(await eva.handRankV2([0, 1, 2, 3, 4, 5, 8])).eq(RANK.FOUR_OF_A_KIND)
+
+    // "2/2/2", "3/3", "4/4"
+    expect(await eva.handRankV2([0, 1, 2, 4, 5, 8, 9])).eq(RANK.FULL_HOUSE)
+
+    // "2/3/4/5/6", "A/A"
+    expect(await eva.handRankV2([0, 5, 10, 14, 18, 48, 49])).eq(RANK.STRAIGHT)
+
+    // "2/2/2", "3", "4", "Q", "K"
+    expect(await eva.handRankV2([0, 1, 2, 4, 8, 41, 44])).eq(RANK.THREE_OF_A_KIND)
 }
 
 main()

@@ -142,11 +142,11 @@ contract Evaluator7 {
             uint sb = suit_binary[suits - 1];
 
             if (sb < 3000) {
-                return Flush1(FLUSH_ADDRESSES[0]).flush(suit_binary[suits - 1]);
+                return Flush1(FLUSH_ADDRESSES[0]).flush(sb);
             } else if (sb < 6000) {
-                return Flush2(FLUSH_ADDRESSES[1]).flush(suit_binary[suits - 1]);
+                return Flush2(FLUSH_ADDRESSES[1]).flush(sb - 3000);
             } else {
-                return Flush3(FLUSH_ADDRESSES[2]).flush(suit_binary[suits - 1]);
+                return Flush3(FLUSH_ADDRESSES[2]).flush(sb - 6000);
             }
 
         }     
