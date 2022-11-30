@@ -90,10 +90,10 @@ async function main(
     const dpTable = await (new DpTables__factory(owner)).deploy()
     console.log("dpTable.address : ", dpTable.address)
 
-    let flushs = await deploy_flushs(owner, true)
+    let flushs = await deploy_flushs(owner, process.env.USING_PREDEPLOY_FLUSHS == undefined ? false : true)
     console.log("flushs : ", flushs)
 
-    let noflushs = await deploy_no_flushs(owner, true)
+    let noflushs = await deploy_no_flushs(owner, process.env.USING_PREDEPLOY_FLUSHS == undefined ? false : true)
     console.log("noflushs : ", noflushs)
 
     const eva = await (new Evaluator7__factory(owner)).deploy(
