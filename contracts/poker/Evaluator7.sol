@@ -74,7 +74,7 @@ contract Evaluator7 {
         0x1,  0x8,  0x40, 0x200
     ];
 
-    constructor(address _dpTables, address[3] memory _flushes, address[17] memory _noflushes)  {
+    constructor(address _dpTables, address[3] memory _flushes, address[16] memory _noflushes)  {
         DP_TABLES = _dpTables;
 
         for (uint i=0; i<_flushes.length; i++) {
