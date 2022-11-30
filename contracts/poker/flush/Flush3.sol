@@ -2,7 +2,8 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract Flush3 {
-    uint[2192] public flush = [
+    function flush(uint index) public pure returns(uint) {
+    uint[2192] memory flush = [
           uint(488),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),
   uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),
   uint(487),  uint(487),  uint(487),  uint(487),  uint(487),  uint(487),  uint(487),  uint(0),
@@ -278,4 +279,6 @@ contract Flush3 {
   uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),
   uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0),  uint(0)
     ];
+    return flush[index];
+}
 }
