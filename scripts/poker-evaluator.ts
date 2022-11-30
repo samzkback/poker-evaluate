@@ -138,6 +138,15 @@ async function main(
 
     // "2/2/2", "3", "4", "Q", "K"
     expect(await eva.handRankV2([0, 1, 2, 4, 8, 41, 44])).eq(RANK.THREE_OF_A_KIND)
+
+    // "2/2", "3/3", "4", "Q", "K"
+    expect(await eva.handRankV2([0, 1, 4, 5, 8, 41, 44])).eq(RANK.TWO_PAIR)
+
+    // "2/2", "3", "4", "5", "Q", "K"
+    expect(await eva.handRankV2([0, 1, 4, 8, 14, 41, 44])).eq(RANK.ONE_PAIR)
+
+    // "2", "3", "4", "5", "J",  "Q", "K"
+    expect(await eva.handRankV2([0, 4, 8, 14, 39, 41, 44])).eq(RANK.HIGH_CARD)
 }
 
 main()
