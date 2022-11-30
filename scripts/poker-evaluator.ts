@@ -1,6 +1,8 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { deploy } from "@openzeppelin/hardhat-upgrades/dist/utils";
+import { expect } from "chai";
 import { ethers } from "hardhat";
+import { exit } from "process";
 import { DpTables__factory, Evaluator7__factory, Flush1__factory, Flush2__factory, Flush3__factory, NoFlush10__factory, NoFlush11__factory, NoFlush12__factory, NoFlush13__factory, NoFlush14__factory, NoFlush15__factory, NoFlush16__factory, NoFlush17__factory, NoFlush1__factory, NoFlush2__factory, NoFlush3__factory, NoFlush4__factory, NoFlush5__factory, NoFlush6__factory, NoFlush7__factory, NoFlush8__factory, NoFlush9__factory } from "./types";
 
 // Evaluator
@@ -113,11 +115,23 @@ async function main(
       HIGH_CARD       = 8
     }
 
-    const cards = [1, 2, 3, 4, 5, 6, 7]
-    //const rank = await eva.handRankV2(cards)
-    const rank = await eva.handRank(1, 2, 3, 4, 5, 6, 7)
+    let cards
+    let rank
+    
+    //  Spades "2/3/4/5/6/7/8"
+    expect(await eva.handRankV2([0, 4, 8, 12, 16, 20, 24])).eq(RANK.STRAIGHT_FLUSH)
+
+    // Spades "2/3/4/5/6" Hearts"2" Diamonds"2"
+    expect(await eva.handRankV2([0, 4, 8, 12, 16, 1, 2])).eq(RANK.STRAIGHT_FLUSH)
+
+    // Spades "2/3/4/5/7" Hearts"2" Diamonds"2"
+    expect(await eva.handRankV2([0, 4, 8, 12, 20, 1, 2])).eq(RANK.FLUSH)
+
+    // "2/2/2/2", "3/3/3"
+    rank = await eva.handRankV2([0, 1, 2, 3, 4, 5, 7])
     console.log("rank : ", rank)
 
+    exit(0)
 }
 
 main()
