@@ -19,5 +19,6 @@ npx hardhat run scripts/poker-evaluator.ts --network localhost
 
 # TODO
 1. split contract to deploy on real network.
-2. same rank compare
-3. sanity test 100% coverage
+2. compile optimizer need long time.
+3. same rank compare
+4. sanity test 100% coverage
