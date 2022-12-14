@@ -106,6 +106,10 @@ contract Evaluator7 {
         return STRAIGHT_FLUSH;                   //   10 straight-flushes
     }
 
+    function evaluateV2(uint[7] calldata cards) public view returns (uint) {
+        return evaluate(cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], cards[6]);
+    }
+
     function evaluate(uint a, uint b, uint c , uint d, uint e, uint f, uint g) public view returns (uint) {
         uint suit_hash = 0;
         uint[4] memory suit_binary = [ uint(0), uint(0), uint(0), uint(0) ]; // 4
@@ -140,8 +144,10 @@ contract Evaluator7 {
             suit_binary[g & 0x3] |= binaries_by_id[g];
 
             uint sb = suit_binary[suits - 1];
+            console.log("sb : ", sb);
 
             if (sb < 3000) {
+                console.log("FLUSH_ADDRESSES[0] : ", FLUSH_ADDRESSES[0]);
                 return Flush1(FLUSH_ADDRESSES[0]).flush(sb);
             } else if (sb < 6000) {
                 return Flush2(FLUSH_ADDRESSES[1]).flush(sb - 3000);

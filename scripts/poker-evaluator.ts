@@ -1,7 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { deploy } from "@openzeppelin/hardhat-upgrades/dist/utils";
 import { expect } from "chai";
-import { randomBytes } from "crypto";
 import { ethers } from "hardhat";
 import { exit } from "process";
 import { DpTables__factory, Evaluator7__factory, Flush1__factory, Flush2__factory, Flush3__factory, NoFlush10__factory, NoFlush11__factory, NoFlush12__factory, NoFlush13__factory, NoFlush14__factory, NoFlush15__factory, NoFlush16__factory, NoFlush17__factory, NoFlush1__factory, NoFlush2__factory, NoFlush3__factory, NoFlush4__factory, NoFlush5__factory, NoFlush6__factory, NoFlush7__factory, NoFlush8__factory, NoFlush9__factory } from "./types";
@@ -20,9 +18,9 @@ async function deploy_flushs(
   
   if (using_previous_deploy) {
     return [
-        '0xA1980305533385CA58273e6Bf947956324e39041',
-        '0x99993F3DA09cf76d4CbCF43ea7D2977a9792B7BF',
-        '0x724bdd89A71e233E4000646eaf83dE60Ca1FAA8d'
+        '0x0c4471deDaE2dB1e53a4927ca598A9236A9cD773',
+        '0xd9402769415035d59dE98733Dd166c4e903B4f8C',
+        '0x48F8e25562EB57c9Fb1b12145d34f09b1b8bd1D6'
     ]
 
   }
@@ -116,17 +114,30 @@ async function main(
       HIGH_CARD       = 8
     }
 
+    let eva_win, eva_lose
+
     //  Spades "2/3/4/5/6/7/8"
-    expect(await eva.handRankV2([0, 4, 8, 12, 16, 20, 24])).eq(RANK.STRAIGHT_FLUSH)
-    console.log("flush_gas : ", await eva.estimateGas.handRankV2([0, 4, 8, 12, 16, 20, 24]))
+    const CARDS_SPADES_2345678 = [0, 4, 8, 12, 16, 20, 24]
+    expect(await eva.handRankV2(CARDS_SPADES_2345678)).eq(RANK.STRAIGHT_FLUSH)
+    console.log("flush_gas : ", await eva.estimateGas.handRankV2(CARDS_SPADES_2345678))
 
     // Spades "2/3/4/5/6" Hearts"2" Diamonds"2"
-    expect(await eva.handRankV2([0, 4, 8, 12, 16, 1, 2])).eq(RANK.STRAIGHT_FLUSH)
+    const CARDS_SPADES_23456 = [0, 4, 8, 12, 16, 1, 2]
+    expect(await eva.handRankV2(CARDS_SPADES_23456)).eq(RANK.STRAIGHT_FLUSH)
+
+    // Compare STRAIGHT_FLUSH
+    expect(await eva.evaluateV2(CARDS_SPADES_2345678)).lt(await eva.evaluateV2(CARDS_SPADES_23456))
 
     // Spades "2/3/4/5/7" Hearts"2" Diamonds"2"
-    expect(await eva.handRankV2([0, 4, 8, 12, 20, 1, 2])).eq(RANK.FLUSH)
+    const CARDS_SPADES_23457 = [0, 4, 8, 12, 20, 1, 2]
+    expect(await eva.handRankV2(CARDS_SPADES_23457)).eq(RANK.FLUSH)
+
     // "Spades 2/2/2", "Spades 3", "Spades4", "SpadesQ", "SpadesK"
-    expect(await eva.handRankV2([0, 1, 2, 4, 8, 40, 44])).eq(RANK.FLUSH)
+    const CARDS_SPADES_234QK = [0, 1, 2, 4, 8, 40, 44]
+    expect(await eva.handRankV2(CARDS_SPADES_234QK)).eq(RANK.FLUSH)
+
+    // Compare FLUSH
+    expect(await eva.evaluateV2(CARDS_SPADES_234QK)).lt(await eva.evaluateV2(CARDS_SPADES_23457))
 
     // "2/2/2/2", "3/3", "4"
     expect(await eva.handRankV2([0, 1, 2, 3, 4, 5, 8])).eq(RANK.FOUR_OF_A_KIND)
@@ -146,9 +157,16 @@ async function main(
     // "2/2", "3", "4", "5", "Q", "K"
     expect(await eva.handRankV2([0, 1, 4, 8, 14, 41, 44])).eq(RANK.ONE_PAIR)
 
+    const CARDS_HIGH_46JQK = [0, 4, 8, 18, 39, 41, 44]
+    expect(await eva.handRankV2(CARDS_HIGH_46JQK)).eq(RANK.HIGH_CARD)
+
     // "2", "3", "4", "5", "J",  "Q", "K"
-    expect(await eva.handRankV2([0, 4, 8, 14, 39, 41, 44])).eq(RANK.HIGH_CARD)
-    console.log("unflush gas : ", await eva.estimateGas.handRankV2([0, 4, 8, 14, 39, 41, 44]))
+    const CARDS_HIGH_45JQK = [0, 4, 8, 14, 39, 41, 44]
+    expect(await eva.handRankV2(CARDS_HIGH_45JQK)).eq(RANK.HIGH_CARD)
+    console.log("unflush gas : ", await eva.estimateGas.handRankV2(CARDS_HIGH_45JQK))
+
+    // Compare High Cards
+    expect(await eva.evaluateV2(CARDS_HIGH_46JQK)).lt(await eva.evaluateV2(CARDS_HIGH_45JQK))
 
 }
 

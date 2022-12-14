@@ -22,3 +22,4 @@ npx hardhat run scripts/poker-evaluator.ts --network localhost
 2. compile optimizer need long time.
 3. same rank compare
 4. sanity test 100% coverage
+5. theortical understand of the algo
