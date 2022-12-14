@@ -25,8 +25,6 @@ import {NoFlush15} from "./noFlush/NoFlush15.sol";
 import {NoFlush16} from "./noFlush/NoFlush16.sol";
 import {NoFlush17} from "./noFlush/NoFlush17.sol";
 
-import "hardhat/console.sol";
-
 contract Evaluator7 {
 
     address public immutable DP_TABLES;
@@ -132,7 +130,6 @@ contract Evaluator7 {
         quinary[(g >> 2)]++;
 
         uint suits = DpTables(DP_TABLES).suits(suit_hash);
-        console.log("suits : ", suits);
 
         if (suits > 0) {
             suit_binary[a & 0x3] |= binaries_by_id[a];
@@ -144,10 +141,8 @@ contract Evaluator7 {
             suit_binary[g & 0x3] |= binaries_by_id[g];
 
             uint sb = suit_binary[suits - 1];
-            console.log("sb : ", sb);
 
             if (sb < 3000) {
-                console.log("FLUSH_ADDRESSES[0] : ", FLUSH_ADDRESSES[0]);
                 return Flush1(FLUSH_ADDRESSES[0]).flush(sb);
             } else if (sb < 6000) {
                 return Flush2(FLUSH_ADDRESSES[1]).flush(sb - 3000);
@@ -157,13 +152,7 @@ contract Evaluator7 {
 
         }     
 
-        console.log("quinary : ");
-        for (uint index = 0; index < 13; index++) {
-            console.log(quinary[index]);
-        }
-    
         hsh = hash_quinary(quinary, 13, 7); // buggy!!
-        console.log("hsh : ", hsh);
 
         if (hsh < 3000) {
             return NoFlush1(NOFLUSH_ADDRESSES[0]).noflush(hsh);

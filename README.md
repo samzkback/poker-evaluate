@@ -9,8 +9,7 @@ this repo is based on [poker-solidity](https://github.com/dxganta/poker-solidity
 # Setup
 ```shell
 npm install
-npx hardhat node &
-npx hardhat run scripts/poker-evaluator.ts --network localhost
+npx hardhat run scripts/poker-evaluator.ts
 ```
 
 # Gas

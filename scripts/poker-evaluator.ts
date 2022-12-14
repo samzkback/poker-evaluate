@@ -98,7 +98,7 @@ async function main(
       dpTable.address,
       flushs,
       noflushs,
-      {gasLimit : 300000000}
+      {gasLimit : 10000000}
     )
     console.log("eva.address : " , eva.address)
 
