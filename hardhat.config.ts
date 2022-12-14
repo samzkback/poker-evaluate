@@ -58,13 +58,13 @@ module.exports = {
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: customAccounts,
-      blockGasLimit : 300_000_000,
-      gas : 300_000_000
+      // blockGasLimit : 300_000_000,
+      // gas : 300_000_000
     },
     hardhat: {
       accounts: hardhatAccounts,
-      blockGasLimit : 300_000_000,
-      gas : 300_000_000
+      // blockGasLimit : 300_000_000,
+      // gas : 300_000_000
     },
 
     l1: {

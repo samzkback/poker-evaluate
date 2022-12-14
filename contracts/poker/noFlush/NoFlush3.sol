@@ -2,7 +2,7 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract NoFlush3 {
-    uint[3000] public noflush = [
+    uint16[3000] public noflush = [
         107,  108,  109,  110,  107,  108,  109,  110,
   111,  107,  108,  109,  110,  111,  112,  107,
   108,  109,  110,  111,  112,  113,  107,  108,
